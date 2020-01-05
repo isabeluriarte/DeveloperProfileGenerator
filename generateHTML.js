@@ -26,8 +26,8 @@ const colors = {
 };
 
 function generateHTML(data, user) {
-  
-  
+
+
   return `<!DOCTYPE html>
 <html lang="en">
    <head>
@@ -176,29 +176,44 @@ function generateHTML(data, user) {
       </head>
       <body>
       <div class="wrapper container">
-      <div class="photo-header card">
+      <div class="photo-header card col">
           <img src="${user.profileImage}" alt="">
-          <h1>Hi! \n My name is ${user.name}</h1>
-          <h2>Currently @ ${user.company}</h2>
-          <div class="links-nav row">
-              <a href="https://www.google.com/maps/place/${user.location}" class="nav-link">${user.location}</a>
-              <a href="${user.gitProf}" class="nav-link">GitHub</a>
-              <a href="http://${user.blog}" class="nav-link">Blog</a>
+          <h2>Hi! \n My name is ${user.name}</h2>
+          <h4>Currently @ ${user.company}</h4>
+          <div class="links-nav">
+          <i class="fas fa-location-arrow"></i><a href="https://www.google.com/maps/place/${user.location}" class="nav-link">${user.location}</a>
+          <i class="fab fa-github"></i><a href="${user.gitProf}" class="nav-link">GitHub</a>
+          <i class="fas fa-rss"></i><a href="http://${user.blog}" class="nav-link">Blog</a>
           </div>
       </div>
   </div>
-  <div class="center">
-      <div class="container">
-          <h2></h2>
+  <div>
+      <div class="col">
+          <h3>${user.bio}</h3>
           <div class="row">
-              <div class="card"></div>
-              <div class="card"></div>
-              <div class="card"></div>
-              <div class="card"></div>
+              <div class="card col">
+              <h4>Public Repositories</h4>
+              <h6>${user.repos}</h6>
+              </div>
+              <div class="card col">
+              <h4>Starred Repos</h4>
+              <h6></h6>
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="card col">
+              <h4>Following</h4>
+              <h6>${user.following}</h6>
+              </div>
+              <div class="card col">
+              <h4>Followers</h4>
+              <h6>${user.followers}</h6>
+              </div>
           </div>
       </div>
   </div>
       </body>`
-        }
+}
 
 module.exports = generateHTML;

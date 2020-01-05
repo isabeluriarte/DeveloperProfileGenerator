@@ -13,7 +13,7 @@ const writeFileAsync = (html) => {
 
     pdf.create(html, options).toFile('./profile.pdf', function(err, res) {
         if (err) return console.log(err);
-        console.log(res); // { filename: '/app/businesscard.pdf' }
+        console.log(res);
       });
 } 
 
@@ -54,14 +54,14 @@ async function init() {
             bio: githubResponse.data.bio || null,
             repos: githubResponse.data.public_repos || null,
             followers: githubResponse.data.followers || null,
-            following: githubResponse.data.following || null
+            following: githubResponse.data.following || null,
+            stars: githubResponse.data.starred_url || null
         }
-        console.log(githubResponse);
 
         const html = generateHTML(answers, user);
 
         await writeFileAsyncHtml("index.html", html);
-        // await writeFileAsync(html);
+        await writeFileAsync(html);
 
     } catch(err) {
         console.log(err);
