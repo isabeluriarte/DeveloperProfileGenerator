@@ -3,8 +3,19 @@ const inquirer = require("inquirer");
 const axios = require("axios");
 const fs = require("fs");
 const util = require("util");
+const pdf = require('html-pdf');
 
-const writeFileAsync = util.promisify(fs.writeFile);
+
+const writeFileAsyncHtml = util.promisify(fs.writeFile);
+
+const writeFileAsync = (html) => {
+    const options = { format: 'Letter' };
+
+    pdf.create(html, options).toFile('./profile.pdf', function(err, res) {
+        if (err) return console.log(err);
+        console.log(res); // { filename: '/app/businesscard.pdf' }
+      });
+} 
 
 const questions = [
   {
@@ -27,16 +38,30 @@ function writeToFile(fileName, data) {
 async function init() {
     try {
         const answers = await inquirer.prompt(questions);
+        
 
-        const queryURL = `https://api.github.com/users/${answers.username}/repos?per_page=10`;
-        const githubResponse = await axios.get(queryURL);
+        const queryURL = `https://api.github.com/users/${answers.username}`;
+        const githubResponse = await axios.get(queryURL)
 
-        // console.log(githubResponse);
+        const user = {
+            profileImage: githubResponse.data.avatar_url || null,
+            username: githubResponse.data.login || null,
+            name: githubResponse.data.name || null,
+            company: githubResponse.data.company || null,
+            location: githubResponse.data.location || null,
+            gitProf: githubResponse.data.html_url || null,
+            blog: githubResponse.data.blog || null,
+            bio: githubResponse.data.bio || null,
+            repos: githubResponse.data.public_repos || null,
+            followers: githubResponse.data.followers || null,
+            following: githubResponse.data.following || null
+        }
+        console.log(githubResponse);
 
-        const html = generateHTML(answers);
-        console.log(html)
+        const html = generateHTML(answers, user);
 
-        await writeFileAsync("index.pdf", html);
+        await writeFileAsyncHtml("index.html", html);
+        // await writeFileAsync(html);
 
     } catch(err) {
         console.log(err);

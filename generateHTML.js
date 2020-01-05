@@ -3,7 +3,7 @@ const colors = {
     wrapperBackground: "#E6E1C3",
     headerBackground: "#C1C72C",
     headerColor: "black",
-    photoBorderColor: "#black"
+    photoBorderColor: "black"
   },
   blue: {
     wrapperBackground: "#5F64D3",
@@ -25,7 +25,9 @@ const colors = {
   }
 };
 
-function generateHTML(data) {
+function generateHTML(data, user) {
+  
+  
   return `<!DOCTYPE html>
 <html lang="en">
    <head>
@@ -173,7 +175,29 @@ function generateHTML(data) {
       </style>
       </head>
       <body>
-      <h1>COOL</h1>
+      <div class="wrapper container">
+      <div class="photo-header card">
+          <img src="${user.profileImage}" alt="">
+          <h1>Hi! \n My name is ${user.name}</h1>
+          <h2>Currently @ ${user.company}</h2>
+          <div class="links-nav row">
+              <a href="https://www.google.com/maps/place/${user.location}" class="nav-link">${user.location}</a>
+              <a href="${user.gitProf}" class="nav-link">GitHub</a>
+              <a href="http://${user.blog}" class="nav-link">Blog</a>
+          </div>
+      </div>
+  </div>
+  <div class="center">
+      <div class="container">
+          <h2></h2>
+          <div class="row">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+          </div>
+      </div>
+  </div>
       </body>`
         }
 
